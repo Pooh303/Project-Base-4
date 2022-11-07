@@ -27,6 +27,10 @@ while run:
     
     draw_bg()
     
+    #move agent
+    agent_1.move()
+    agent_2.move()
+    
     agent_1.draw(screen)
     agent_2.draw(screen)
     
