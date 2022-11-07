@@ -4,8 +4,8 @@ import button
 pygame.init()
 
 #create game window
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Main Menu")
@@ -30,13 +30,13 @@ keys_img = pygame.image.load('assets/images/button/button_keys.png').convert_alp
 back_img = pygame.image.load('assets/images/button/button_back.png').convert_alpha()
 
 #create button instances
-resume_button = button.Button(304, 125, resume_img, 1)
-options_button = button.Button(297, 250, options_img, 1)
-quit_button = button.Button(336, 375, quit_img, 1)
-video_button = button.Button(226, 75, video_img, 1)
-audio_button = button.Button(225, 200, audio_img, 1)
-keys_button = button.Button(246, 325, keys_img, 1)
-back_button = button.Button(332, 450, back_img, 1)
+resume_button = button.Button(550, 200, resume_img, 1)
+options_button = button.Button(550, 350, options_img, 1)
+quit_button = button.Button(600, 500, quit_img, 1)
+video_button = button.Button(550, 75, video_img, 1)
+audio_button = button.Button(550, 200, audio_img, 1)
+keys_button = button.Button(550, 325, keys_img, 1)
+back_button = button.Button(550, 450, back_img, 1)
 
 def draw_text(text, font, text_col, x, y):
   img = font.render(text, True, text_col)
@@ -54,7 +54,7 @@ while run:
     if menu_state == "main":
       #draw pause screen buttons
       if resume_button.draw(screen):
-        game_paused = False
+        import play
       if options_button.draw(screen):
         menu_state = "options"
       if quit_button.draw(screen):
@@ -71,13 +71,14 @@ while run:
       if back_button.draw(screen):
         menu_state = "main"
   else:
-    draw_text("Press SPACE to pause", font, TEXT_COL, 160, 250)
+    draw_text("Press Any BUTTON To Start", font, TEXT_COL, 300, 300)
 
   #event handler
   for event in pygame.event.get():
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_SPACE:
-        game_paused = True
+        import play
+        game_paused ==True
     if event.type == pygame.QUIT:
       run = False
 

@@ -24,7 +24,7 @@ agent_2 = Agent(800, 300) #pos spawn agent2
 
 run = True
 while run:
-    
+    key = pygame.key.get_pressed()
     draw_bg()
     
     #move agent
@@ -37,6 +37,9 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+    if key[pygame.K_ESCAPE]:
+            import menu
+            #กดescแล้วเข้าหน้า menu 
 
 
     pygame.display.update() #update display
