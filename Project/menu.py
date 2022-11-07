@@ -21,13 +21,13 @@ font = pygame.font.SysFont("arialblack", 40)
 TEXT_COL = (255, 255, 255)
 
 #load button images
-resume_img = pygame.image.load("images/button_resume.png").convert_alpha()
-options_img = pygame.image.load("images/button_options.png").convert_alpha()
-quit_img = pygame.image.load("images/button_quit.png").convert_alpha()
-video_img = pygame.image.load('images/button_video.png').convert_alpha()
-audio_img = pygame.image.load('images/button_audio.png').convert_alpha()
-keys_img = pygame.image.load('images/button_keys.png').convert_alpha()
-back_img = pygame.image.load('images/button_back.png').convert_alpha()
+resume_img = pygame.image.load("assets/images/button/button_resume.png").convert_alpha()
+options_img = pygame.image.load("assets/images/button/button_options.png").convert_alpha()
+quit_img = pygame.image.load("assets/images/button/button_quit.png").convert_alpha()
+video_img = pygame.image.load('assets/images/button/button_video.png').convert_alpha()
+audio_img = pygame.image.load('assets/images/button/button_audio.png').convert_alpha()
+keys_img = pygame.image.load('assets/images/button/button_keys.png').convert_alpha()
+back_img = pygame.image.load('assets/images/button/button_back.png').convert_alpha()
 
 #create button instances
 resume_button = button.Button(304, 125, resume_img, 1)
