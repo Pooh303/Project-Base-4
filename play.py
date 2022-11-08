@@ -1,5 +1,6 @@
 import pygame
 from fighter import Agent #import Agent from fighter
+# import menu
 
 pygame.init()
 
@@ -8,6 +9,10 @@ SCREEN_HEIGHT = 720
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Project")
+
+
+clock = pygame.time.Clock()
+FPS = 144 #fps
 
 bg_image = pygame.image.load("assets/images/background/bg.jpg").convert_alpha() #background
 
@@ -24,12 +29,15 @@ agent_2 = Agent(800, 300) #pos spawn agent2
 
 run = True
 while run:
-    key = pygame.key.get_pressed()
+    
+    clock.tick(FPS)
+    
+    # key = pygame.key.get_pressed()
     draw_bg()
     
     #move agent
-    agent_1.move()
-    agent_2.move()
+    agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
+    # agent_2.move(SCREEN_WIDTH, SCREEN_HEIGHT)
     
     agent_1.draw(screen)
     agent_2.draw(screen)
@@ -37,9 +45,9 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-    if key[pygame.K_ESCAPE]:
-            import menu
-            #กดescแล้วเข้าหน้า menu 
+    # if key[pygame.K_ESCAPE]:
+    #     menu()
+             #กดescแล้วเข้าหน้า menu 
 
 
     pygame.display.update() #update display
