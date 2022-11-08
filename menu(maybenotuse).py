@@ -54,7 +54,7 @@ while run:
     if menu_state == "main":
       #draw pause screen buttons
       if resume_button.draw(screen):
-        import play
+        import play #กดresumeเข้าหน้า play
       if options_button.draw(screen):
         menu_state = "options"
       if quit_button.draw(screen):
@@ -77,8 +77,8 @@ while run:
   for event in pygame.event.get():
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_SPACE:
-        import play
-        game_paused ==True
+        import play #กดอะไรแล้วเข้าหน้า play
+        
     if event.type == pygame.QUIT:
       run = False
 
