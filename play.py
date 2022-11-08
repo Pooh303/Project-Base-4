@@ -26,7 +26,7 @@ def draw_bg():
 agent_1 = Agent(100, 300) #pos spawn agent1
 agent_2 = Agent(800, 300) #pos spawn agent2
 
-
+paused = False
 run = True
 while run:
     
@@ -41,6 +41,7 @@ while run:
     
     agent_1.draw(screen)
     agent_2.draw(screen)
+    
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
