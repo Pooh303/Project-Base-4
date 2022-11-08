@@ -5,7 +5,6 @@ class Agent():
         self.rect = pygame.Rect((x, y, 80, 180))
         self.vel_y = 0
         self.jump = False
-        self.jump_count = 0
 
     def move(self, screen_width, screen_height):
         """move left right"""
@@ -39,7 +38,6 @@ class Agent():
         if self.rect.bottom + dy > screen_height - 200:
             self.vel_y = 0
             self.jump = False
-            self.jump_count = 0
             dy = screen_height - 200 - self.rect.bottom
         
         

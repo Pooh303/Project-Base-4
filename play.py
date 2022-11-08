@@ -21,10 +21,11 @@ def draw_bg():
     """draw BG"""
     scale_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(scale_bg, (0, 0))  #0,0 คือขนาดขอบ
+    pygame.draw.line(screen, (255, 0, 0), (0, 520), (SCREEN_WIDTH, 520)) #โชว์พื้นสีแดง
 
 
-agent_1 = Agent(100, 300) #pos spawn agent1
-agent_2 = Agent(800, 300) #pos spawn agent2
+agent_1 = Agent(100, 340) #pos spawn agent1
+agent_2 = Agent(800, 340) #pos spawn agent2
 
 paused = False
 run = True
