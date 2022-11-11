@@ -1,12 +1,12 @@
 import pygame
 from fighter import Agent #import Agent from fighter
-# import menu
+
 
 pygame.init()
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
-GREEN = (0, 255, 0)
+
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Project")
@@ -22,8 +22,7 @@ def draw_bg():
     """draw BG"""
     scale_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(scale_bg, (0, 0))  #0,0 คือขนาดขอบ
-    X=0; Y=520; width=1280; height=340
-    pygame.draw.rect(screen, (51, 102, 0), (X, Y, width, height)) #โชว์พื้นสีเขียว
+    pygame.draw.line(screen, (255, 0, 0), (0, 520), (SCREEN_WIDTH, 520)) #โชว์พื้นสีเขียว
 
 
 agent_1 = Agent(100, 340) #pos spawn agent1
@@ -49,9 +48,6 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-    # if key[pygame.K_ESCAPE]:
-    #     menu()
-             #กดescแล้วเข้าหน้า menu 
 
 
     pygame.display.update() #update display
