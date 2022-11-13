@@ -40,6 +40,7 @@ class Agent():
 
 
 
+
         
         self.vel_y += GRAVITY
         dy += self.vel_y

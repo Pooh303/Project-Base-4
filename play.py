@@ -43,6 +43,7 @@ paused = False
 run = True
 while run:
     
+    
     clock.tick(FPS)
     
     # key = pygame.key.get_pressed()
@@ -58,8 +59,9 @@ while run:
     
     agent_1.draw(screen)
     agent_2.draw(screen)
-    
-    
+    key = pygame.key.get_pressed()
+    if key[pygame.K_ESCAPE]:
+            import menu #ต้องการให้ไปหน้า resume ยังไม่เสร็จ
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
