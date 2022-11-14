@@ -4,20 +4,27 @@ import button
 
 pygame.init()
 
+#mouse cursor
+pygame.mouse.set_cursor(*pygame.cursors.tri_left)
+
+#screen setting
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
-
-
+icon = pygame.image.load('assets/images/icon/fist2.png')
+pygame.display.set_icon(icon)
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Project")
+pygame.display.set_caption("BASE4")
 
 
 clock = pygame.time.Clock()
 FPS = 144 #fps
 
+#colors
 RED = (255, 0 ,0)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
+GREEN = (50, 205, 50)
+TRANSPARENT = (0, 0, 0, 0) #fake png
 
 #load  images
 bg_image = pygame.image.load("assets/images/background/bg.jpg").convert_alpha() #background
@@ -39,7 +46,7 @@ def draw_bg():
     """draw BG"""
     scale_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(scale_bg, (0, 0))  #0,0 คือขนาดขอบ
-    pygame.draw.line(screen, RED, (0, 520), (SCREEN_WIDTH, 520)) #โชว์พื้นสีเขียว
+    pygame.draw.line(screen, TRANSPARENT, (0, 520), (SCREEN_WIDTH, 520)) #โชว์พื้นสีเขียว
     
 
 def draw_health_bar(health, x, y):
@@ -47,6 +54,7 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, WHITE, (x - 2, y - 2, 404, 34))
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
     pygame.draw.rect(screen, YELLOW, (x, y, 400 * ratio, 30))
+    pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
 
 
 agent_1 = Agent(100, 340) #pos spawn agent1
@@ -116,7 +124,6 @@ def game_loop():
             
             agent_1.draw(screen)
             agent_2.draw(screen)
-            key = pygame.key.get_pressed()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
