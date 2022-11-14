@@ -27,7 +27,7 @@ GREEN = (50, 205, 50)
 TRANSPARENT = (0, 0, 0, 0) #fake png
 
 #load  images
-bg_image = pygame.image.load("assets/images/background/bg.jpg").convert_alpha() #background
+bg_image = pygame.image.load("assets/images/background/bgcopy.jpg").convert_alpha() #background
 start_img = pygame.image.load("assets/images/button/play.png").convert_alpha()
 start_img = pygame.transform.scale(start_img, (280, 110))
 resume_img = pygame.image.load("assets/images/button/button_resume.png").convert_alpha()
@@ -46,7 +46,9 @@ def draw_bg():
     """draw BG"""
     scale_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(scale_bg, (0, 0))  #0,0 คือขนาดขอบ
-    pygame.draw.line(screen, TRANSPARENT, (0, 520), (SCREEN_WIDTH, 520)) #โชว์พื้นสีเขียว
+    pygame.draw.line(screen, TRANSPARENT, (0, SCREEN_HEIGHT), (0, SCREEN_HEIGHT)) #โชว์พื้นสีเขียว
+    # pygame.draw.line(screen, TRANSPARENT, (0, 520), (SCREEN_WIDTH, 520)) #โชว์พื้นสีเขียว (((อันเก่า)))
+
     
 
 def draw_health_bar(health, x, y):
