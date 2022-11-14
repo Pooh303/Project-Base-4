@@ -66,6 +66,7 @@ def intro_loop():
             if menu_state == "start":
                 if start_button.draw(screen):
                     intro = False
+                    game_loop()
                 if quit_button.draw(screen):
                     pygame.quit()
         for event in pygame.event.get():
@@ -77,6 +78,7 @@ def intro_loop():
 def paused_loop():
     intro = True
     menu_state = "resume"
+    
     while intro:
         
         screen.fill((52, 78, 91))
@@ -86,6 +88,7 @@ def paused_loop():
                 if resume_button.draw(screen):
                     intro = False
                 if quit_button.draw(screen):
+                    intro = False
                     intro_loop()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -94,34 +97,36 @@ def paused_loop():
 
 def game_loop():
     run = True
-    intro_loop()
+    paused = False
     while run:
+        if not paused:
         
-        
-        clock.tick(FPS)
-        
-        # key = pygame.key.get_pressed()
-        draw_bg()
-        
-        #show health
-        draw_health_bar(agent_1.health, 20, 20)
-        draw_health_bar(agent_2.health, 860, 20)
-        
-        #move agent
-        agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2)
-        # agent_2.move(SCREEN_WIDTH, SCREEN_HEIGHT)
-        
-        agent_1.draw(screen)
-        agent_2.draw(screen)
-        key = pygame.key.get_pressed()
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    paused_loop()
-                    pygame.display.update() 
-            if event.type == pygame.QUIT:
-                run = False
-        pygame.display.update() #update display
-game_loop()
+            clock.tick(FPS)
+            
+            # key = pygame.key.get_pressed()
+            draw_bg()
+            
+            #show health
+            draw_health_bar(agent_1.health, 20, 20)
+            draw_health_bar(agent_2.health, 860, 20)
+            
+            #move agent
+            agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2)
+            # agent_2.move(SCREEN_WIDTH, SCREEN_HEIGHT)
+            
+            agent_1.draw(screen)
+            agent_2.draw(screen)
+            key = pygame.key.get_pressed()
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        paused_loop()
+                        pygame.display.update() 
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+            pygame.display.update() #update display
+        else:
+            game_loop.update()
+intro_loop()
 
 pygame.quit()
