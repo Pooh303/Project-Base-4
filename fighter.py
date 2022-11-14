@@ -80,3 +80,4 @@ class Agent():
     
     def draw(self, surface):
         pygame.draw.rect(surface, (100, 0, 0), self.rect)
+        
