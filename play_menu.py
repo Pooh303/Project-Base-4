@@ -32,14 +32,14 @@ start_img = pygame.image.load("assets/images/icon/buttons/play.png").convert_alp
 start_img = pygame.transform.scale(start_img, (300,140))
 resume_img = pygame.image.load("assets/images/icon/buttons/resume.png").convert_alpha()
 resume_img = pygame.transform.scale(resume_img, (300,140))
-options_img = pygame.image.load("assets/images/button/button_options.png").convert_alpha()
+# options_img = pygame.image.load("assets/images/button/button_options.png").convert_alpha()
 quit_img = pygame.image.load("assets/images/icon/buttons/exit.png").convert_alpha()
 quit_img = pygame.transform.scale(quit_img, (300,140))
 
 #create button instances
 start_button = button.Button(520, 160, start_img, 1)
 resume_button = button.Button(520, 160, resume_img, 1)
-options_button = button.Button(297, 250, options_img, 1)
+# options_button = button.Button(297, 250, options_img, 1)
 quit_button = button.Button(520, 380, quit_img, 1)
 
 
