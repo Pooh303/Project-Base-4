@@ -28,17 +28,19 @@ TRANSPARENT = (0, 0, 0, 0) #fake png
 
 #load  images
 bg_image = pygame.image.load("assets/images/background/bgcopy.jpg").convert_alpha() #background
-start_img = pygame.image.load("assets/images/button/play.png").convert_alpha()
-start_img = pygame.transform.scale(start_img, (280, 110))
-resume_img = pygame.image.load("assets/images/button/button_resume.png").convert_alpha()
+start_img = pygame.image.load("assets/images/icon/buttons/play.png").convert_alpha()
+start_img = pygame.transform.scale(start_img, (300,140))
+resume_img = pygame.image.load("assets/images/icon/buttons/resume.png").convert_alpha()
+resume_img = pygame.transform.scale(resume_img, (300,140))
 options_img = pygame.image.load("assets/images/button/button_options.png").convert_alpha()
-quit_img = pygame.image.load("assets/images/button/button_quit.png").convert_alpha()
+quit_img = pygame.image.load("assets/images/icon/buttons/exit.png").convert_alpha()
+quit_img = pygame.transform.scale(quit_img, (300,140))
 
 #create button instances
-start_button = button.Button(504, 125, start_img, 1)
-resume_button = button.Button(504, 125, resume_img, 1)
+start_button = button.Button(520, 160, start_img, 1)
+resume_button = button.Button(520, 160, resume_img, 1)
 options_button = button.Button(297, 250, options_img, 1)
-quit_button = button.Button(536, 375, quit_img, 1)
+quit_button = button.Button(520, 380, quit_img, 1)
 
 
 
@@ -69,7 +71,7 @@ def intro_loop():
     intro = True
     menu_state = "start"
     while intro:
-        
+
         screen.fill((52, 78, 91))
         
         if game_start == True:
@@ -110,7 +112,7 @@ def game_loop():
     paused = False
     while run:
         if not paused:
-        
+            pygame.mouse.set_visible(False)
             clock.tick(FPS)
             
             # key = pygame.key.get_pressed()
@@ -129,6 +131,7 @@ def game_loop():
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
+                        pygame.mouse.set_visible(True)
                         paused_loop()
                         pygame.display.update() 
                 if event.type == pygame.QUIT:
