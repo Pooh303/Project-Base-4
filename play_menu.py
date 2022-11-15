@@ -27,7 +27,7 @@ GREEN = (50, 205, 50)
 TRANSPARENT = (0, 0, 0, 0) #fake png
 
 #load  images
-bg_image = pygame.image.load("assets/images/background/bgcopy.jpg").convert_alpha() #background
+bg_image = pygame.image.load("assets/images/background/bgmix.jpg").convert_alpha() #background
 start_img = pygame.image.load("assets/images/icon/buttons/play.png").convert_alpha()
 start_img = pygame.transform.scale(start_img, (300,140))
 resume_img = pygame.image.load("assets/images/icon/buttons/resume.png").convert_alpha()
