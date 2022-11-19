@@ -1,5 +1,4 @@
 import pygame
-
 class Agent():
     def __init__(self, x, y):
         self.flip = False
@@ -71,12 +70,13 @@ class Agent():
     def attack(self, surface, target):
         # self.attacking = True
         attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 2 * self.rect.width, self.rect.height)
-        
-        if attacking_rect.colliderect(target.rect):
-            target.health -= 10
-        
-        pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
     
+        if attacking_rect.colliderect(target.rect):
+            target.health -= 0.5
+            if target.health <= 0:
+                pass #ฉากจบ เมื่อชนะศัตรู ยังไม่ทำ
+        pygame.draw.rect(surface, ("Blue"), attacking_rect)
     
     def draw(self, surface):
-        pygame.draw.rect(surface, (100, 0, 0), self.rect)
+        pygame.draw.rect(surface, ("#49D1EF"), self.rect)
+        
