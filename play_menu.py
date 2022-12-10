@@ -55,11 +55,11 @@ quit_button = button.Button(520, 380, quit_img, 1)
 
 #load spritesheets
 samurai_sheet = pygame.image.load("assets/Characters/char_1/samurai.png").convert_alpha()
-agent_sheet = pygame.image.load("assets/Characters/char_1/samurai.png").convert_alpha()
+agent_sheet = pygame.image.load("assets/Characters/char_1/spirit.png").convert_alpha()
 
 #def num of steps in each animation
-SAMURAI_ANIMATION_STEPS = [10, 8, 1, 4, 4, 3, 4]
-AGENT_ANIMATION_STEPS = [10, 8, 1, 4, 4, 3, 4]
+SAMURAI_ANIMATION_STEPS = [10, 8, 1, 4, 4, 4, 4]
+AGENT_ANIMATION_STEPS = [8, 8, 2, 4, 4, 4, 6]
 
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
@@ -158,6 +158,7 @@ def game_loop():
             #move agent
                 agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2)
                 agent_1.updateee()
+                agent_2.updateee()
             # agent_2.move(SCREEN_WIDTH, SCREEN_HEIGHT)
             else:
             #display count timer

@@ -16,7 +16,10 @@ class Agent():
         self.jump = False
         self.attacking = False
         self.attack_type = 0
+        self.attack_cooldown = 0
+        self.hit = False
         self.health = 100
+        self.alive = True
     
     def load_images(self, sprite_sheet, animation_steps):
         animation_list = []
@@ -85,6 +88,8 @@ class Agent():
         else:
             self.flip = True
         
+        if self.attack_cooldown > 0:
+            self.attack_cooldown -= 1
         
         self.rect.x += dx
         self.rect.y += dy
@@ -93,7 +98,13 @@ class Agent():
     def updateee(self):
         """update animation"""
         #check action
-        if self.attacking == True:
+        if self.health <= 0:
+            self.health = 0
+            self.alive = False
+            self.update_action(6)
+        elif self.hit == True:
+            self.update_action(5)
+        elif self.attacking == True:
             if self.attack_type == 1:
                 self.update_action(3)
             elif self.attack_type == 2:
@@ -105,26 +116,40 @@ class Agent():
         else:
             self.update_action(0)
         
-        animation_cooldown = 100
+        #anime speed
+        animation_cooldown = 65
+        
+        
         self.image = self.animation_list[self.action][self.frame_index]
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
             self.frame_index += 1
             self.update_time = pygame.time.get_ticks()
         if self.frame_index >= len(self.animation_list[self.action]):
-            self.frame_index = 0
-            if self.action == 3 or self.action == 4:
-                self.attacking = False
-        
+            if self.alive == False:
+                self.frame_index = len(self.animation_list[self.action]) - 1
+            else:
+                self.frame_index = 0
+                if self.action == 3 or self.action == 4 or self.action == 5:
+                    self.attacking = False
+                    self.attack_cooldown = 50
+                    self.hit = False
+            # if self.action == 5:
+            #     self.hit == False
+            #     self.attacking == False
+            #     self.attack_cooldown = 50
+            
     
     def attack(self, surface, target):
-        self.attacking = True
-        attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 2 * self.rect.width, self.rect.height)
-    
-        if attacking_rect.colliderect(target.rect):
-            target.health -= 5
-            if target.health <= 0:
-                pass #ฉากจบ เมื่อชนะศัตรู ยังไม่ทำ
-        pygame.draw.rect(surface, ("Red"), attacking_rect)
+        if self.attack_cooldown == 0:
+            self.attacking = True
+            attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 2.9 * self.rect.width, self.rect.height)
+        
+            if attacking_rect.colliderect(target.rect):
+                target.health -= 5
+                target.hit = True
+                if target.health <= 0:
+                    pass #ฉากจบ เมื่อชนะศัตรู ยังไม่ทำ
+            pygame.draw.rect(surface, ("Red"), attacking_rect)
     
     def update_action(self, new_action):
         #check new action diff frame
