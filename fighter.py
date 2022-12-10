@@ -1,7 +1,8 @@
 import pygame
 
 class Agent():
-    def __init__(self, x, y, flip, data, sprite_sheet, animation_steps):
+    def __init__(self, player, x, y, flip, data, sprite_sheet, animation_steps):
+        self.player = player
         self.size = data[0]
         self.image_scale = data[1]
         self.offset = data[2]
@@ -33,7 +34,7 @@ class Agent():
         return animation_list
 
     #กำหนดสภาพแวดล้อม
-    def move(self, screen_width, screen_height, surface, target):
+    def move(self, screen_width, screen_height, surface, target, round_over):
         """move left right"""
         SPEED = 5
         GRAVITY = 0.5
@@ -45,24 +46,43 @@ class Agent():
         key = pygame.key.get_pressed()
 
 
-        if self.attacking == False:
-            # Move LR
-            if key[pygame.K_a]:
-                dx = -SPEED
-                self.running = True
-            if key[pygame.K_d]:
-                dx = SPEED
-                self.running = True
-            # Jump
-            if key[pygame.K_w] and self.jump == False:
-                self.vel_y = -15
-                self.jump = True
-            if key[pygame.K_j] or key[pygame.K_k]:
-                self.attack(surface, target)
-                if key[pygame.K_j]:
-                    self.attack_type = 1
-                if key[pygame.K_k]:
-                    self.attack_type = 2
+        if self.attacking == False and self.alive == True and round_over == False:
+            #check p1 control
+            if self.player == 1:
+                # Move LR
+                if key[pygame.K_a]:
+                    dx = -SPEED
+                    self.running = True
+                if key[pygame.K_d]:
+                    dx = SPEED
+                    self.running = True
+                # Jump
+                if key[pygame.K_w] and self.jump == False:
+                    self.vel_y = -15
+                    self.jump = True
+                if key[pygame.K_j] or key[pygame.K_k]:
+                    self.attack(target)
+                    if key[pygame.K_j]:
+                        self.attack_type = 1
+                    if key[pygame.K_k]:
+                        self.attack_type = 2
+            if self.player == 2:
+                if key[pygame.K_LEFT]:
+                    dx = -SPEED
+                    self.running = True
+                if key[pygame.K_RIGHT]:
+                    dx = SPEED
+                    self.running = True
+                # Jump
+                if key[pygame.K_UP] and self.jump == False:
+                    self.vel_y = -15
+                    self.jump = True
+                if key[pygame.K_KP1] or key[pygame.K_KP2]:
+                    self.attack(target)
+                    if key[pygame.K_KP1]:
+                        self.attack_type = 1
+                    if key[pygame.K_KP2]:
+                        self.attack_type = 2
 
         #apply gravity
         self.vel_y += GRAVITY
@@ -136,7 +156,7 @@ class Agent():
             #     self.attack_cooldown = 50
             
     
-    def attack(self, surface, target):
+    def attack(self, target):
         if self.attack_cooldown == 0:
             self.attacking = True
             attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 2.9 * self.rect.width, self.rect.height)
@@ -146,7 +166,7 @@ class Agent():
                 target.hit = True
                 if target.health <= 0:
                     pass #ฉากจบ เมื่อชนะศัตรู ยังไม่ทำ
-            pygame.draw.rect(surface, ("Red"), attacking_rect)
+            # pygame.draw.rect(surface, ("Red"), attacking_rect)
     
     def update_action(self, new_action):
         #check new action diff frame
@@ -157,6 +177,6 @@ class Agent():
     
     def draw(self, surface):
         img = pygame.transform.flip(self.image, self.flip, False)
-        pygame.draw.rect(surface, ("#49D1EF"), self.rect)
+        # pygame.draw.rect(surface, ("#49D1EF"), self.rect)
         surface.blit(img, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
         
