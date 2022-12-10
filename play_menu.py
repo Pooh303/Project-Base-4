@@ -142,5 +142,3 @@ def game_loop():
 intro_loop()
 
 pygame.quit()
-
-print("Meen") #test
