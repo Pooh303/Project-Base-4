@@ -133,8 +133,8 @@ count_font = pygame.font.Font("assets/fonts/turok.ttf", 80)
 score_font = pygame.font.Font("assets/fonts/turok.ttf", 30)
 
 def game_loop():
-    #define game variables
-    intro_count = 3
+    #นับเวลาถอยหลังก่อนเริ่มเกม
+    intro_count = 0
     last_count_update = pygame.time.get_ticks()
 
     run = True

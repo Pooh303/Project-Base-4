@@ -1,4 +1,5 @@
 import pygame
+
 class Agent():
     def __init__(self, x, y, flip, data, sprite_sheet, animation_steps):
         self.size = data[0]
@@ -31,6 +32,7 @@ class Agent():
             animation_list.append(temp_img_list)
         return animation_list
 
+    #กำหนดสภาพแวดล้อม
     def move(self, screen_width, screen_height, surface, target):
         """move left right"""
         SPEED = 5
@@ -41,18 +43,17 @@ class Agent():
         self.attack_type = 0
         
         key = pygame.key.get_pressed()
-        
-        
-        
+
+
         if self.attacking == False:
-            #move LR
+            # Move LR
             if key[pygame.K_a]:
                 dx = -SPEED
                 self.running = True
             if key[pygame.K_d]:
                 dx = SPEED
                 self.running = True
-            #jump
+            # Jump
             if key[pygame.K_w] and self.jump == False:
                 self.vel_y = -15
                 self.jump = True
@@ -63,13 +64,9 @@ class Agent():
                 if key[pygame.K_k]:
                     self.attack_type = 2
 
-
-
-
-        
+        #apply gravity
         self.vel_y += GRAVITY
         dy += self.vel_y
-        
         
         
         # ไม่ให้เดินออกจอ
@@ -82,7 +79,7 @@ class Agent():
             self.jump = False
             dy = screen_height - 200 - self.rect.bottom
         
-        #playerมองเข้าหากัน
+        # ทิศทางของ Player
         if target.rect.centerx > self.rect.centerx:
             self.flip = False
         else:
