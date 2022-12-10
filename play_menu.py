@@ -42,7 +42,9 @@ resume_button = button.Button(520, 160, resume_img, 1)
 # options_button = button.Button(297, 250, options_img, 1)
 quit_button = button.Button(520, 380, quit_img, 1)
 
-
+def draw_text(text, font, text_col, x, y):
+    img = font.render(text, True, text_col)
+    screen.blit(img, (x, y))
 
 def draw_bg():
     """draw BG"""
@@ -84,7 +86,7 @@ def intro_loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                
+
         pygame.display.update() 
 
 def paused_loop():
@@ -107,7 +109,18 @@ def paused_loop():
                 pygame.quit()
         pygame.display.update() 
 
+
+
+count_font = pygame.font.Font("assets/fonts/turok.ttf", 80)
+score_font = pygame.font.Font("assets/fonts/turok.ttf", 30)
+
 def game_loop():
+    #define game variables
+    intro_count = 3
+    last_count_update = pygame.time.get_ticks()
+    score = [0, 0]#player scores. [P1, P2]
+    round_over = False
+    ROUND_OVER_COOLDOWN = 2000
     run = True
     paused = False
     while run:
@@ -122,10 +135,20 @@ def game_loop():
             draw_health_bar(agent_1.health, 20, 20)
             draw_health_bar(agent_2.health, 860, 20)
             
+            #update countdown
+            if intro_count <= 0:
             #move agent
-            agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2)
+                agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2)
             # agent_2.move(SCREEN_WIDTH, SCREEN_HEIGHT)
+            else:
+            #display count timer
+                draw_text(str(intro_count), count_font, RED, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3)
+            #update count timer
+                if (pygame.time.get_ticks() - last_count_update) >= 1000:
+                    intro_count -= 1
+                    last_count_update = pygame.time.get_ticks()
             
+            #draw fighters
             agent_1.draw(screen)
             agent_2.draw(screen)
             for event in pygame.event.get():
