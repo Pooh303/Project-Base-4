@@ -98,7 +98,7 @@ class Agent():
                 self.update_action(3)
             elif self.attack_type == 2:
                 self.update_action(4)
-        if self.jump == True:
+        elif self.jump == True:
             self.update_action(2)
         elif self.running == True:
             self.update_action(1)
@@ -112,6 +112,8 @@ class Agent():
             self.update_time = pygame.time.get_ticks()
         if self.frame_index >= len(self.animation_list[self.action]):
             self.frame_index = 0
+            if self.action == 3 or self.action == 4:
+                self.attacking = False
         
     
     def attack(self, surface, target):
@@ -119,10 +121,10 @@ class Agent():
         attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 2 * self.rect.width, self.rect.height)
     
         if attacking_rect.colliderect(target.rect):
-            target.health -= 0.5
+            target.health -= 5
             if target.health <= 0:
                 pass #ฉากจบ เมื่อชนะศัตรู ยังไม่ทำ
-        pygame.draw.rect(surface, ("Blue"), attacking_rect)
+        pygame.draw.rect(surface, ("Red"), attacking_rect)
     
     def update_action(self, new_action):
         #check new action diff frame
