@@ -12,6 +12,7 @@ class Agent():
         self.update_time = pygame.time.get_ticks()
         self.rect = pygame.Rect((x, y, 80, 180))
         self.vel_y = 0
+        self.running = False
         self.jump = False
         self.attacking = False
         self.attack_type = 0
@@ -33,6 +34,8 @@ class Agent():
         GRAVITY = 0.5
         dx = 0
         dy = 0
+        self.running = False
+        self.attack_type = 0
         
         key = pygame.key.get_pressed()
         
@@ -42,8 +45,10 @@ class Agent():
             #move LR
             if key[pygame.K_a]:
                 dx = -SPEED
+                self.running = True
             if key[pygame.K_d]:
                 dx = SPEED
+                self.running = True
             #jump
             if key[pygame.K_w] and self.jump == False:
                 self.vel_y = -15
@@ -87,15 +92,30 @@ class Agent():
     
     def updateee(self):
         """update animation"""
-        animation_cooldown = 500
+        #check action
+        if self.attacking == True:
+            if self.attack_type == 1:
+                self.update_action(3)
+            elif self.attack_type == 2:
+                self.update_action(4)
+        if self.jump == True:
+            self.update_action(2)
+        elif self.running == True:
+            self.update_action(1)
+        else:
+            self.update_action(0)
+        
+        animation_cooldown = 100
         self.image = self.animation_list[self.action][self.frame_index]
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
             self.frame_index += 1
             self.update_time = pygame.time.get_ticks()
+        if self.frame_index >= len(self.animation_list[self.action]):
+            self.frame_index = 0
         
     
     def attack(self, surface, target):
-        # self.attacking = True
+        self.attacking = True
         attacking_rect = pygame.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, 2 * self.rect.width, self.rect.height)
     
         if attacking_rect.colliderect(target.rect):
@@ -103,6 +123,13 @@ class Agent():
             if target.health <= 0:
                 pass #ฉากจบ เมื่อชนะศัตรู ยังไม่ทำ
         pygame.draw.rect(surface, ("Blue"), attacking_rect)
+    
+    def update_action(self, new_action):
+        #check new action diff frame
+        if new_action != self.action:
+            self.action = new_action
+            self.frame_index = 0
+            self.update_time = pygame.time.get_ticks()
     
     def draw(self, surface):
         img = pygame.transform.flip(self.image, self.flip, False)
