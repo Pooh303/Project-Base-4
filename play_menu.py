@@ -26,6 +26,16 @@ WHITE = (255, 255, 255)
 GREEN = (50, 205, 50)
 TRANSPARENT = (0, 0, 0, 0) #fake png
 
+#def fighter var
+SAMURAI_SIZE = 162
+SAMURAI_SCALE = 4
+SAMURAI_OFFSET = [72, 56]
+SAMURAI_DATA = [SAMURAI_SIZE, SAMURAI_SCALE, SAMURAI_OFFSET]
+AGENT_SIZE = 162
+AGENT_SCALE = 4
+AGENT_OFFSET = [72, 56]
+AGENT_DATA = [AGENT_SIZE, AGENT_SCALE, AGENT_OFFSET]
+
 #load  images
 bg_image = pygame.image.load("assets/images/background/bgmix.jpg").convert_alpha() #background
 start_img = pygame.image.load("assets/images/icon/buttons/play.png").convert_alpha()
@@ -41,6 +51,15 @@ start_button = button.Button(520, 160, start_img, 1)
 resume_button = button.Button(520, 160, resume_img, 1)
 # options_button = button.Button(297, 250, options_img, 1)
 quit_button = button.Button(520, 380, quit_img, 1)
+
+
+#load spritesheets
+samurai_sheet = pygame.image.load("assets/Characters/char_1/samurai.png").convert_alpha()
+agent_sheet = pygame.image.load("assets/Characters/char_1/samurai.png").convert_alpha()
+
+#def num of steps in each animation
+SAMURAI_ANIMATION_STEPS = [10, 8, 1, 4, 4, 3, 4]
+AGENT_ANIMATION_STEPS = [10, 8, 1, 4, 4, 3, 4]
 
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
@@ -59,12 +78,11 @@ def draw_health_bar(health, x, y):
     ratio = health / 100
     pygame.draw.rect(screen, WHITE, (x - 2, y - 2, 404, 34))
     pygame.draw.rect(screen, RED, (x, y, 400, 30))
-    pygame.draw.rect(screen, YELLOW, (x, y, 400 * ratio, 30))
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
 
 
-agent_1 = Agent(100, 340) #pos spawn agent1
-agent_2 = Agent(800, 340) #pos spawn agent2
+agent_1 = Agent(200, 340, False, SAMURAI_DATA, samurai_sheet, SAMURAI_ANIMATION_STEPS) #pos spawn agent1
+agent_2 = Agent(1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STEPS) #pos spawn agent2
 
 game_start = True
 menu_state = "start"
@@ -133,10 +151,13 @@ def game_loop():
             draw_health_bar(agent_1.health, 20, 20)
             draw_health_bar(agent_2.health, 860, 20)
             
+            
+            
             #update countdown
             if intro_count <= 0:
             #move agent
                 agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2)
+                agent_1.updateee()
             # agent_2.move(SCREEN_WIDTH, SCREEN_HEIGHT)
             else:
             #display count timer
