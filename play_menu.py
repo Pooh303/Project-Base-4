@@ -118,9 +118,7 @@ def game_loop():
     #define game variables
     intro_count = 3
     last_count_update = pygame.time.get_ticks()
-    score = [0, 0]#player scores. [P1, P2]
-    round_over = False
-    ROUND_OVER_COOLDOWN = 2000
+
     run = True
     paused = False
     while run:
