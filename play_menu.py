@@ -1,6 +1,7 @@
 import pygame
 from fighter import Agent #import Agent from fighter
 import button
+from pygame import mixer
 
 pygame.init()
 
@@ -93,6 +94,8 @@ game_start = True
 menu_state = "start"
 
 def intro_loop():
+    mixer.music.load('background.wav')
+    mixer.music.play(-1)
     intro = True
     menu_state = "start"
     while intro:
@@ -102,6 +105,7 @@ def intro_loop():
         if game_start == True:
             if menu_state == "start":
                 if start_button.draw(screen):
+                    mixer.music.stop()
                     intro = False
                     score[0] = 0
                     score[1] = 0

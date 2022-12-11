@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 
 class Agent():
     def __init__(self, player, x, y, flip, data, sprite_sheet, animation_steps):
@@ -64,8 +65,12 @@ class Agent():
                     self.attack(target)
                     if key[pygame.K_j]:
                         self.attack_type = 1
+                        sword_Sound = mixer.Sound('sword.wav')
+                        sword_Sound.play()
                     if key[pygame.K_k]:
                         self.attack_type = 2
+                        sword_Sound = mixer.Sound('sword.wav')
+                        sword_Sound.play()
             if self.player == 2:
                 if key[pygame.K_LEFT]:
                     dx = -SPEED
