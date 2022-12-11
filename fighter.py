@@ -54,9 +54,11 @@ class Agent():
                 if key[pygame.K_a]:
                     dx = -SPEED
                     self.running = True
+                    self.flip = True
                 if key[pygame.K_d]:
                     dx = SPEED
                     self.running = True
+                    self.flip = False
                 # Jump
                 if key[pygame.K_w] and self.jump == False:
                     self.vel_y = -15
@@ -75,18 +77,20 @@ class Agent():
                 if key[pygame.K_LEFT]:
                     dx = -SPEED
                     self.running = True
+                    self.flip = True
                 if key[pygame.K_RIGHT]:
                     dx = SPEED
                     self.running = True
+                    self.flip = False
                 # Jump
                 if key[pygame.K_UP] and self.jump == False:
                     self.vel_y = -15
                     self.jump = True
-                if key[pygame.K_KP1] or key[pygame.K_KP2]:
+                if key[pygame.K_r] or key[pygame.K_t]:
                     self.attack(target)
-                    if key[pygame.K_KP1]:
+                    if key[pygame.K_r]:
                         self.attack_type = 1
-                    if key[pygame.K_KP2]:
+                    if key[pygame.K_t]:
                         self.attack_type = 2
 
         #apply gravity
@@ -104,11 +108,11 @@ class Agent():
             self.jump = False
             dy = screen_height - 200 - self.rect.bottom
         
-        # ทิศทางของ Player
-        if target.rect.centerx > self.rect.centerx:
-            self.flip = False
-        else:
-            self.flip = True
+        # # ทิศทางของ Player auto f2f
+        # if target.rect.centerx > self.rect.centerx:
+        #     self.flip = False
+        # else:
+        #     self.flip = True
         
         if self.attack_cooldown > 0:
             self.attack_cooldown -= 1
