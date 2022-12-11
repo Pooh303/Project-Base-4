@@ -60,7 +60,6 @@ quit_button = button.Button(520, 380, quit_img, 1)
 #load spritesheets
 samurai_sheet = pygame.image.load("assets/Characters/char_1/samurai.png").convert_alpha()
 agent_sheet = pygame.image.load("assets/Characters/char_1/spirit.png").convert_alpha()
-
 victory_img = pygame.image.load("assets/images/hey.png").convert_alpha()
 
 #def num of steps in each animation
@@ -104,6 +103,8 @@ def intro_loop():
             if menu_state == "start":
                 if start_button.draw(screen):
                     intro = False
+                    score[0] = 0
+                    score[1] = 0
                     game_loop()
                 if quit_button.draw(screen):
                     pygame.quit()
@@ -142,9 +143,12 @@ def game_loop():
     #นับเวลาถอยหลังก่อนเริ่มเกม
     intro_count = 0
     last_count_update = pygame.time.get_ticks()
-
+    agent_1 = Agent(1, 200, 340, False, SAMURAI_DATA, samurai_sheet, SAMURAI_ANIMATION_STEPS) #pos spawn agent1
+    agent_2 = Agent(2, 1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STEPS) #pos spawn agent2
     run = True
     paused = False
+    #update countdown
+    round_over = False
     while run:
         if not paused:
             pygame.mouse.set_visible(False)
@@ -156,12 +160,13 @@ def game_loop():
             #show health
             draw_health_bar(agent_1.health, 20, 20)
             draw_health_bar(agent_2.health, 860, 20)
-            draw_text("P1: " + str(score[0]), score_font, RED, 20, 60)
-            draw_text("P2: " + str(score[1]), score_font, RED, 860, 60)
+            draw_text("P1 : " + str(score[0]), score_font, RED, 20, 60)
+            draw_text("P2 : " + str(score[1]), score_font, RED, 860, 60)
             
             
             
-            #update countdown
+            
+            
             if intro_count <= 0:
             #move agent
                 agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2, round_over)
@@ -183,25 +188,23 @@ def game_loop():
             #draw fighters
             agent_1.draw(screen)
             agent_2.draw(screen)
-            
-            
-            # if round_over == False:
-            #     if agent_1.alive == False:
-            #         score[1] += 1
-            #         round_over = True
-            #         round_over_time = pygame.time.get_ticks()
-            #     elif agent_2.alive == False:
-            #         score[0] += 1
-            #         round_over = True
-            #         round_over_time = pygame.time.get_ticks()
-            # else:
-            #     screen.blit(victory_img, (360, 150))
-            #     if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
-            #         round_over = False
-            #         intro_count = 3
-            #         agent_1 = Agent(1, 200, 340, False, SAMURAI_DATA, samurai_sheet, SAMURAI_ANIMATION_STEPS) #pos spawn agent1
-            #         agent_2 = Agent(2, 1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STEPS) #pos spawn agent2
-            
+
+            if round_over == False:
+                if agent_1.alive == False:
+                    score[1] += 1
+                    round_over = True
+                    round_over_time = pygame.time.get_ticks()
+                elif agent_2.alive == False:
+                    score[0] += 1
+                    round_over = True
+                    round_over_time = pygame.time.get_ticks()
+            else:
+                if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
+                    round_over = False
+                    intro_count = 3
+                    agent_1 = Agent(1, 200, 340, False, SAMURAI_DATA, samurai_sheet, SAMURAI_ANIMATION_STEPS) #pos spawn agent1
+                    agent_2 = Agent(2, 1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STEPS) #pos spawn agent2
+                
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
