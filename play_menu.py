@@ -94,8 +94,9 @@ game_start = True
 menu_state = "start"
 
 def intro_loop():
-    mixer.music.load('background.wav')
+    mixer.music.load('background.wav')#เพลง
     mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.05)#เปลี่ยนระเดับเสียงเพลง
     intro = True
     menu_state = "start"
     while intro:

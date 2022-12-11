@@ -67,12 +67,12 @@ class Agent():
                     self.attack(target)
                     if key[pygame.K_j]:
                         self.attack_type = 1
-                        sword_Sound = mixer.Sound('sword.wav')
-                        sword_Sound.play()
+                        # sword_Sound = mixer.Sound('sword.wav')
+                        # sword_Sound.play()
                     if key[pygame.K_k]:
                         self.attack_type = 2
-                        sword_Sound = mixer.Sound('sword.wav')
-                        sword_Sound.play()
+                        # sword_Sound = mixer.Sound('sword.wav')
+                        # sword_Sound.play()
             if self.player == 2:
                 if key[pygame.K_LEFT]:
                     dx = -SPEED
@@ -86,11 +86,11 @@ class Agent():
                 if key[pygame.K_UP] and self.jump == False:
                     self.vel_y = -15
                     self.jump = True
-                if key[pygame.K_r] or key[pygame.K_t]:
+                if key[pygame.K_KP1] or key[pygame.K_KP2]:
                     self.attack(target)
-                    if key[pygame.K_r]:
+                    if key[pygame.K_KP1]:
                         self.attack_type = 1
-                    if key[pygame.K_t]:
+                    if key[pygame.K_KP2]:
                         self.attack_type = 2
 
         #apply gravity
