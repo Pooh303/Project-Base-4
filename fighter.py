@@ -158,7 +158,7 @@ class Agent():
                 if self.action == 3 or self.action == 4 or self.action == 5:
                     sword_Sound = mixer.Sound('sword.wav')
                     sword_Sound.play()
-                    sword_Sound.set_volume(0.3)
+                    sword_Sound.set_volume(0.2)
                     self.attacking = False
                     self.attack_cooldown = 50
                     self.hit = False

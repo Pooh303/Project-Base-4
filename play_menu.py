@@ -198,10 +198,16 @@ def game_loop():
             if round_over == False:
                 if agent_1.alive == False:
                     score[1] += 1
+                    hurt_Sound = mixer.Sound('male_hurt.wav')
+                    hurt_Sound.play(0)
+                    hurt_Sound.set_volume(0.2)
                     round_over = True
                     round_over_time = pygame.time.get_ticks()
                 elif agent_2.alive == False:
                     score[0] += 1
+                    hurt_Sound = mixer.Sound('male_hurt.wav')
+                    hurt_Sound.play(0)
+                    hurt_Sound.set_volume(0.2)
                     round_over = True
                     round_over_time = pygame.time.get_ticks()
             else:
