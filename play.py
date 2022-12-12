@@ -57,6 +57,7 @@ main_img = pygame.image.load("assets/images/buttons/mainmenu.png").convert_alpha
 main_img = pygame.transform.scale(main_img, (300,140))
 victory_img = pygame.image.load("assets/images/icon/victory.png").convert_alpha()
 bgintro_img = pygame.image.load("assets/images/background/intro.png").convert_alpha()
+pause_img = pygame.image.load("assets/images/background/pause.png").convert_alpha()
 
 
 #Create button instances
@@ -92,6 +93,12 @@ def draw_bgintro():
     """Draw BG INtro"""
     scale_bgintro = pygame.transform.scale(bgintro_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(scale_bgintro, (0, 0)) #0,0 คือขนาดขอบ
+    pygame.draw.line(screen, TRANSPARENT, (0, SCREEN_HEIGHT), (0, SCREEN_HEIGHT))
+
+def draw_bgpause():
+    """Draw BG PAUSE"""
+    scale_pauseintro = pygame.transform.scale(pause_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen.blit(scale_pauseintro, (0, 0)) #0,0 คือขนาดขอบ
     pygame.draw.line(screen, TRANSPARENT, (0, SCREEN_HEIGHT), (0, SCREEN_HEIGHT))
 
 
@@ -139,7 +146,7 @@ def paused_loop():
     
     while intropaused:
         
-        screen.fill((52, 78, 91))
+        draw_bgpause()
         
         if game_start == True:
             if menu_state == "resume":
