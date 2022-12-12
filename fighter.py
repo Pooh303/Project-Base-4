@@ -36,7 +36,7 @@ class Agent():
 
     #กำหนดสภาพแวดล้อม
     def move(self, screen_width, screen_height, surface, target, round_over):
-        """move left right"""
+        """move left and right"""
         SPEED = 5
         GRAVITY = 0.5
         dx = 0
@@ -48,9 +48,9 @@ class Agent():
 
 
         if self.attacking == False and self.alive == True and round_over == False:
-            #check p1 control
+            #Player1 control
             if self.player == 1:
-                # Move LR
+                # Move buttons player1
                 if key[pygame.K_a]:
                     dx = -SPEED
                     self.running = True
@@ -59,7 +59,7 @@ class Agent():
                     dx = SPEED
                     self.running = True
                     self.flip = False
-                # Jump
+                # Jump button player1
                 if key[pygame.K_w] and self.jump == False:
                     self.vel_y = -15
                     self.jump = True
@@ -73,7 +73,10 @@ class Agent():
                         self.attack_type = 2
                         # sword_Sound = mixer.Sound('sword.wav')
                         # sword_Sound.play()
+
+            #Player2 control
             if self.player == 2:
+                # Move buttons player2
                 if key[pygame.K_LEFT]:
                     dx = -SPEED
                     self.running = True
@@ -82,7 +85,7 @@ class Agent():
                     dx = SPEED
                     self.running = True
                     self.flip = False
-                # Jump
+                # Jump button player2
                 if key[pygame.K_UP] and self.jump == False:
                     self.vel_y = -15
                     self.jump = True
@@ -92,6 +95,7 @@ class Agent():
                         self.attack_type = 1
                     if key[pygame.K_KP2]:
                         self.attack_type = 2
+
 
         #apply gravity
         self.vel_y += GRAVITY
@@ -156,7 +160,7 @@ class Agent():
             else:
                 self.frame_index = 0
                 if self.action == 3 or self.action == 4 or self.action == 5:
-                    sword_Sound = mixer.Sound('sword.wav')
+                    sword_Sound = mixer.Sound('assets/audio/sword.wav')
                     sword_Sound.play()
                     sword_Sound.set_volume(0.2)
                     self.attacking = False
