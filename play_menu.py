@@ -50,14 +50,15 @@ resume_img = pygame.transform.scale(resume_img, (300,140))
 # options_img = pygame.image.load("assets/images/button/button_options.png").convert_alpha()
 quit_img = pygame.image.load("assets/images/icon/buttons/exit.png").convert_alpha()
 quit_img = pygame.transform.scale(quit_img, (300,140))
-
-
+main_img = pygame.image.load("assets/images/icon/buttons/mainmenu.png").convert_alpha()
+main_img = pygame.transform.scale(main_img, (300,140))
 
 #create button instances
 start_button = button.Button(520, 160, start_img, 1)
 resume_button = button.Button(520, 160, resume_img, 1)
 # options_button = button.Button(297, 250, options_img, 1)
 quit_button = button.Button(520, 380, quit_img, 1)
+main_button = button.Button(520, 380, main_img, 1)
 
 
 #load spritesheets
@@ -94,52 +95,51 @@ agent_2 = Agent(2, 1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STE
 
 game_start = True
 menu_state = "start"
-
 def intro_loop():
+    mixer.music.load('background.wav')
     mixer.music.load('background.wav')#เพลง
     mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05)#เปลี่ยนระเดับเสียงเพลง
     intro = True
     menu_state = "start"
     while intro:
-
+        
         screen.fill((52, 78, 91))
         
         if game_start == True:
             if menu_state == "start":
                 if start_button.draw(screen):
                     mixer.music.stop()
-                    intro = False
                     score[0] = 0
                     score[1] = 0
                     game_loop()
                 if quit_button.draw(screen):
                     pygame.quit()
+                
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-
-        pygame.display.update()
+        pygame.display.update() 
 
 def paused_loop():
-    intro = True
+    intropaused = True
     menu_state = "resume"
     
-    while intro:
+    while intropaused:
         
         screen.fill((52, 78, 91))
         
         if game_start == True:
             if menu_state == "resume":
                 if resume_button.draw(screen):
-                    intro = False
+                    intropaused = False
                 if quit_button.draw(screen):
-                    intro = False
-                    intro_loop()
+                    intropaused = False
+                    pygame.quit()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-        pygame.display.update()
+        pygame.display.update() 
 
 
 
@@ -170,7 +170,10 @@ def game_loop():
             draw_text("P1 : " + str(score[0]), score_font, RED, 20, 60)
             draw_text("P2 : " + str(score[1]), score_font, RED, 860, 60)
             
-
+            
+            
+            
+            
             if intro_count <= 0:
             #move agent
                 agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2, round_over)
