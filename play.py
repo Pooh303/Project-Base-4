@@ -197,10 +197,16 @@ def game_loop():
 
             if round_over == False:
                 if player_1.alive == False:
+                    sound_hurt = mixer.Sound('assets/audio/male_hurt.wav')
+                    sound_hurt.play()
+                    sound_hurt.set_volume(0.3)
                     score[1] += 1
                     round_over = True
                     round_over_time = pygame.time.get_ticks()
                 elif player_2.alive == False:
+                    sound_hurt = mixer.Sound('assets/audio/male_hurt.wav')
+                    sound_hurt.play()
+                    sound_hurt.set_volume(0.3)
                     score[0] += 1
                     round_over = True
                     round_over_time = pygame.time.get_ticks()
