@@ -21,7 +21,7 @@ class Agent():
         self.attack_type = 0
         self.attack_cooldown = 0
         self.hit = False
-        self.health = 1
+        self.health = 100
         self.alive = True
     
     def load_images(self, sprite_sheet, animation_steps):
@@ -63,11 +63,11 @@ class Agent():
                 if key[pygame.K_w] and self.jump == False:
                     self.vel_y = -15
                     self.jump = True
-                if key[pygame.K_j] or key[pygame.K_k]:
+                if key[pygame.K_LCTRL] or key[pygame.K_SPACE]:
                     self.attack(target)
-                    if key[pygame.K_j]:
+                    if key[pygame.K_LCTRL]:
                         self.attack_type = 1
-                    if key[pygame.K_k]:
+                    if key[pygame.K_SPACE]:
                         self.attack_type = 2
 
             #Player2 control
@@ -85,11 +85,11 @@ class Agent():
                 if key[pygame.K_UP] and self.jump == False:
                     self.vel_y = -15
                     self.jump = True
-                if key[pygame.K_KP1] or key[pygame.K_KP2]:
+                if key[pygame.K_j] or key[pygame.K_k]:
                     self.attack(target)
-                    if key[pygame.K_KP1]:
+                    if key[pygame.K_j]:
                         self.attack_type = 1
-                    if key[pygame.K_KP2]:
+                    if key[pygame.K_k]:
                         self.attack_type = 2
 
 

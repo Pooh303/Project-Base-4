@@ -173,7 +173,11 @@ def game_loop():
             draw_health_bar(player_1.health, 20, 20)
             draw_health_bar(player_2.health, 860, 20)
             draw_text("P1 : " + str(score[0]), score_font, RED, 20, 60)
+            draw_text("attack : CTRL", score_font, RED, 20, 80)
+            draw_text("heavy attack : SPACE", score_font, RED, 20, 100)
             draw_text("P2 : " + str(score[1]), score_font, RED, 860, 60)
+            draw_text("attack : J", score_font, RED, 860, 80)
+            draw_text("heavy attack : K", score_font, RED, 860, 100)
             
             
             if intro_count <= 0:
