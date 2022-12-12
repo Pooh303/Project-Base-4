@@ -191,8 +191,8 @@ def game_loop():
                     last_count_update = pygame.time.get_ticks()
             
             
-            player_1.updateee()
-            player_2.updateee()
+            player_1.do_action()
+            player_2.do_action()
             
             #Draw fighters
             player_1.draw(screen)

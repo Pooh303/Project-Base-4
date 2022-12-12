@@ -108,7 +108,7 @@ class Agent():
             self.jump = False
             dy = screen_height - 200 - self.rect.bottom
         
-        # # ทิศทางของ Player auto f2f
+        # # ทิศทางของ Player auto F2F
         # if target.rect.centerx > self.rect.centerx:
         #     self.flip = False
         # else:
@@ -121,9 +121,9 @@ class Agent():
         self.rect.y += dy
     
     
-    def updateee(self):
+    def do_action(self):
         """update animation"""
-        #check action
+        #Do action
         if self.health <= 0:
             self.health = 0
             self.alive = False
@@ -142,7 +142,7 @@ class Agent():
         else:
             self.update_action(0)
         
-        #anime speed
+        #Animation speed
         animation_cooldown = 65
         
         
@@ -177,7 +177,7 @@ class Agent():
                 target.health -= 5
                 target.hit = True
                 if target.health <= 0:
-                    pass #ฉากจบ เมื่อชนะศัตรู ยังไม่ทำ
+                    pass #ฉากจบของตัวละคร เมื่อชนะศัตรู (ยังไม่ทำ)
             # pygame.draw.rect(surface, ("Red"), attacking_rect)
     
     def update_action(self, new_action):
