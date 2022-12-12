@@ -2,6 +2,7 @@ import pygame
 from fighter import Agent #import Agent from fighter
 import button
 from pygame import mixer
+import time
 
 pygame.init()
 
@@ -54,6 +55,7 @@ quit_img = pygame.image.load("assets/images/buttons/exit.png").convert_alpha()
 quit_img = pygame.transform.scale(quit_img, (300,140))
 main_img = pygame.image.load("assets/images/buttons/mainmenu.png").convert_alpha()
 main_img = pygame.transform.scale(main_img, (300,140))
+victory_img = pygame.image.load("assets/images/icon/victory.png").convert_alpha()
 
 
 #Create button instances
@@ -99,6 +101,7 @@ player_2 = Agent(2, 1000, 340, True, PLAYER2_DATA, player2_sheet, PLAYER2_ANIMAT
 game_start = True
 menu_state = "start"
 def intro_loop():
+    pygame.mouse.set_visible(True)
     mixer.music.load('assets/audio/background.wav') #เพลง
     mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05) #เปลี่ยนระเดับเสียงเพลง
@@ -150,7 +153,7 @@ score_font = pygame.font.Font("assets/fonts/turok.ttf", 30)
 
 def game_loop():
     #นับเวลาถอยหลังก่อนเริ่มเกม
-    intro_count = 0
+    intro_count = 2
     last_count_update = pygame.time.get_ticks()
     player_1 = Agent(1, 200, 340, False, PLAYER1_DATA, player1_sheet, PLAYER1_ANIMATION_STEPS) #pos spawn agent1
     player_2 = Agent(2, 1000, 340, True, PLAYER2_DATA, player2_sheet, PLAYER2_ANIMATION_STEPS) #pos spawn agent2
@@ -195,6 +198,7 @@ def game_loop():
             player_1.draw(screen)
             player_2.draw(screen)
 
+            end_game = 2
             if round_over == False:
                 if player_1.alive == False:
                     sound_hurt = mixer.Sound('assets/audio/male_hurt.wav')
@@ -210,13 +214,18 @@ def game_loop():
                     score[0] += 1
                     round_over = True
                     round_over_time = pygame.time.get_ticks()
+                elif score[0] == end_game or score[1] == end_game:
+                    time.sleep(0.5)
+                    intro_loop()
+
             else:
                 if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
                     round_over = False
                     intro_count = 3
                     player_1 = Agent(1, 200, 340, False, PLAYER1_DATA, player1_sheet, PLAYER1_ANIMATION_STEPS) #pos spawn agent1
                     player_2 = Agent(2, 1000, 340, True, PLAYER2_DATA, player2_sheet, PLAYER2_ANIMATION_STEPS) #pos spawn agent2
-                
+            
+
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
@@ -227,7 +236,7 @@ def game_loop():
                     pygame.quit()
             pygame.display.update() #Update display
         else:
-            game_loop.update()
+            game_loop()
 intro_loop()
 
 pygame.quit()

@@ -21,7 +21,7 @@ class Agent():
         self.attack_type = 0
         self.attack_cooldown = 0
         self.hit = False
-        self.health = 100
+        self.health = 1
         self.alive = True
     
     def load_images(self, sprite_sheet, animation_steps):
