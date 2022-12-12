@@ -5,13 +5,14 @@ from pygame import mixer
 
 pygame.init()
 
-#mouse cursor
+#Mouse cursor
 pygame.mouse.set_cursor(*pygame.cursors.tri_left)
 
-#screen setting
+
+#Screen setting
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
-icon = pygame.image.load('assets/images/icon/fist2.png')
+icon = pygame.image.load('assets/images/icon/fist.png')
 pygame.display.set_icon(icon)
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("BASE4")
@@ -20,59 +21,66 @@ pygame.display.set_caption("BASE4")
 clock = pygame.time.Clock()
 FPS = 144 #fps
 
-#colors
+
+#Colors
 RED = (255, 0 ,0)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 GREEN = (50, 205, 50)
-TRANSPARENT = (0, 0, 0, 0) #fake png
+TRANSPARENT = (0, 0, 0, 0)
 
-score = [0, 0] #play score [P1, P2]
+#Player score [P1, P2]
+score = [0, 0]
 round_over = False
 ROUND_OVER_COOLDOWN = 2000
 
-#def fighter var
-SAMURAI_SIZE = 162
-SAMURAI_SCALE = 4
-SAMURAI_OFFSET = [72, 56]
-SAMURAI_DATA = [SAMURAI_SIZE, SAMURAI_SCALE, SAMURAI_OFFSET]
-AGENT_SIZE = 162
-AGENT_SCALE = 4
-AGENT_OFFSET = [72, 56]
-AGENT_DATA = [AGENT_SIZE, AGENT_SCALE, AGENT_OFFSET]
 
-#load  images
+#def fighter Player1
+P1_SIZE = 162
+P1_SCALE = 4
+P1_OFFSET = [72, 56]
+P1_DATA = [P1_SIZE, P1_SCALE, P1_OFFSET]
+#def fighter Player2
+P2_SIZE = 162
+P2_SCALE = 4
+P2_OFFSET = [72, 56]
+P2_DATA = [P2_SIZE, P2_SCALE, P2_OFFSET]
+
+
+#Load images
 bg_image = pygame.image.load("assets/images/background/bgmix.jpg").convert_alpha() #background
-start_img = pygame.image.load("assets/images/icon/buttons/play.png").convert_alpha()
+start_img = pygame.image.load("assets/images/icon/buttons/play.png").convert_alpha() #button
 start_img = pygame.transform.scale(start_img, (300,140))
-resume_img = pygame.image.load("assets/images/icon/buttons/resume.png").convert_alpha()
+resume_img = pygame.image.load("assets/images/icon/buttons/resume.png").convert_alpha() #button
 resume_img = pygame.transform.scale(resume_img, (300,140))
-# options_img = pygame.image.load("assets/images/button/button_options.png").convert_alpha()
-quit_img = pygame.image.load("assets/images/icon/buttons/exit.png").convert_alpha()
+quit_img = pygame.image.load("assets/images/icon/buttons/exit.png").convert_alpha() #button
 quit_img = pygame.transform.scale(quit_img, (300,140))
-main_img = pygame.image.load("assets/images/icon/buttons/mainmenu.png").convert_alpha()
+main_img = pygame.image.load("assets/images/icon/buttons/mainmenu.png").convert_alpha() #button
 main_img = pygame.transform.scale(main_img, (300,140))
 
-#create button instances
+
+#Create button instances
 start_button = button.Button(520, 160, start_img, 1)
 resume_button = button.Button(520, 160, resume_img, 1)
-# options_button = button.Button(297, 250, options_img, 1)
 quit_button = button.Button(520, 380, quit_img, 1)
 main_button = button.Button(520, 380, main_img, 1)
 
 
-#load spritesheets
-samurai_sheet = pygame.image.load("assets/Characters/char_1/samurai.png").convert_alpha()
-agent_sheet = pygame.image.load("assets/Characters/char_1/spirit.png").convert_alpha()
-victory_img = pygame.image.load("assets/images/hey.png").convert_alpha()
+#Load spritesheets
+player1_skin = pygame.image.load("assets/Characters/player_1/samurai.png").convert_alpha()
+player2_skin = pygame.image.load("assets/Characters/player_2/spirit.png").convert_alpha()
+# victory_img = pygame.image.load("assets/images/blank.png").convert_alpha()
 
-#def num of steps in each animation
-SAMURAI_ANIMATION_STEPS = [10, 8, 1, 4, 4, 4, 4]
-AGENT_ANIMATION_STEPS = [8, 8, 1, 4, 4, 4, 6]
+
+#def number of steps in each animation
+PLAYER1_ANIMATION_STEPS = [10, 8, 1, 4, 4, 4, 4]
+PLAYER2_ANIMATION_STEPS = [8, 8, 1, 4, 4, 4, 6]
+
 
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
+
 
 def draw_bg():
     """draw BG"""
@@ -81,7 +89,6 @@ def draw_bg():
     pygame.draw.line(screen, TRANSPARENT, (0, SCREEN_HEIGHT), (0, SCREEN_HEIGHT)) #โชว์พื้นสีเขียว
     # pygame.draw.line(screen, TRANSPARENT, (0, 520), (SCREEN_WIDTH, 520)) #โชว์พื้นสีเขียว (((อันเก่า)))
 
-    
 
 def draw_health_bar(health, x, y):
     ratio = health / 100
@@ -90,15 +97,15 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
 
 
-agent_1 = Agent(1, 200, 340, False, SAMURAI_DATA, samurai_sheet, SAMURAI_ANIMATION_STEPS) #pos spawn agent1
-agent_2 = Agent(2, 1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STEPS) #pos spawn agent2
+player_1 = Agent(1, 200, 340, False, P1_DATA, player1_skin, PLAYER1_ANIMATION_STEPS) #pos spawn agent1
+player_2 = Agent(2, 1000, 340, True, P2_DATA, player2_skin, PLAYER2_ANIMATION_STEPS) #pos spawn agent2
 
 game_start = True
 menu_state = "start"
 def intro_loop():
-    mixer.music.load('background.wav')#เพลง
+    mixer.music.load('assets/audio/background.wav') #เพลง
     mixer.music.play(-1)
-    pygame.mixer.music.set_volume(0.05)#เปลี่ยนระเดับเสียงเพลง
+    pygame.mixer.music.set_volume(0.05) #เปลี่ยนระเดับเสียงเพลง
     intro = True
     menu_state = "start"
     while intro:
@@ -149,8 +156,8 @@ def game_loop():
     #นับเวลาถอยหลังก่อนเริ่มเกม
     intro_count = 0
     last_count_update = pygame.time.get_ticks()
-    agent_1 = Agent(1, 200, 340, False, SAMURAI_DATA, samurai_sheet, SAMURAI_ANIMATION_STEPS) #pos spawn agent1
-    agent_2 = Agent(2, 1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STEPS) #pos spawn agent2
+    player_1 = Agent(1, 200, 340, False, P1_DATA, player1_skin, PLAYER1_ANIMATION_STEPS) #pos spawn agent1
+    player_2 = Agent(2, 1000, 340, True, P2_DATA, player2_skin, PLAYER2_ANIMATION_STEPS) #pos spawn agent2
     run = True
     paused = False
     #update countdown
@@ -164,21 +171,18 @@ def game_loop():
             draw_bg()
             
             #show health
-            draw_health_bar(agent_1.health, 20, 20)
-            draw_health_bar(agent_2.health, 860, 20)
+            draw_health_bar(player_1.health, 20, 20)
+            draw_health_bar(player_2.health, 860, 20)
             draw_text("P1 : " + str(score[0]), score_font, RED, 20, 60)
             draw_text("P2 : " + str(score[1]), score_font, RED, 860, 60)
             
-            
-            
-            
-            
+
             if intro_count <= 0:
             #move agent
-                agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2, round_over)
-                agent_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_1, round_over)
+                player_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, player_2, round_over)
+                player_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, player_1, round_over)
                 
-            # agent_2.move(SCREEN_WIDTH, SCREEN_HEIGHT)
+            # player_2.move(SCREEN_WIDTH, SCREEN_HEIGHT)
             else:
             #display count timer
                 draw_text(str(intro_count), count_font, RED, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3)
@@ -188,19 +192,19 @@ def game_loop():
                     last_count_update = pygame.time.get_ticks()
             
             
-            agent_1.updateee()
-            agent_2.updateee()
+            player_1.updateee()
+            player_2.updateee()
             
             #draw fighters
-            agent_1.draw(screen)
-            agent_2.draw(screen)
+            player_1.draw(screen)
+            player_2.draw(screen)
 
             if round_over == False:
-                if agent_1.alive == False:
+                if player_1.alive == False:
                     score[1] += 1
                     round_over = True
                     round_over_time = pygame.time.get_ticks()
-                elif agent_2.alive == False:
+                elif player_2.alive == False:
                     score[0] += 1
                     round_over = True
                     round_over_time = pygame.time.get_ticks()
@@ -208,8 +212,8 @@ def game_loop():
                 if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
                     round_over = False
                     intro_count = 3
-                    agent_1 = Agent(1, 200, 340, False, SAMURAI_DATA, samurai_sheet, SAMURAI_ANIMATION_STEPS) #pos spawn agent1
-                    agent_2 = Agent(2, 1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STEPS) #pos spawn agent2
+                    player_1 = Agent(1, 200, 340, False, P1_DATA, player1_skin, PLAYER1_ANIMATION_STEPS) #pos spawn agent1
+                    player_2 = Agent(2, 1000, 340, True, P2_DATA, player2_skin, PLAYER2_ANIMATION_STEPS) #pos spawn agent2
                 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
