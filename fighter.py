@@ -156,9 +156,6 @@ class Agent():
             else:
                 self.frame_index = 0
                 if self.action == 3 or self.action == 4 or self.action == 5:
-                    sword_Sound = mixer.Sound('assets/audio/sword.wav')
-                    sword_Sound.play()
-                    sword_Sound.set_volume(0.2)
                     self.attacking = False
                     self.attack_cooldown = 50
                     self.hit = False
@@ -176,9 +173,16 @@ class Agent():
             if attacking_rect.colliderect(target.rect):
                 target.health -= 5
                 target.hit = True
+                sword_hit = mixer.Sound('assets/audio/sword.wav')
+                sword_hit.play()
+                sword_hit.set_volume(0.2)
                 if target.health <= 0:
                     pass #ฉากจบของตัวละคร เมื่อชนะศัตรู (ยังไม่ทำ)
             # pygame.draw.rect(surface, ("Red"), attacking_rect)
+            else:
+                no_hit = mixer.Sound('assets/audio/sword2.wav')
+                no_hit.play()
+                no_hit.set_volume(0.2)
     
     def update_action(self, new_action):
         #check new action diff frame
