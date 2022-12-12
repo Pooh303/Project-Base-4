@@ -51,6 +51,8 @@ resume_img = pygame.transform.scale(resume_img, (300,140))
 quit_img = pygame.image.load("assets/images/icon/buttons/exit.png").convert_alpha()
 quit_img = pygame.transform.scale(quit_img, (300,140))
 
+
+
 #create button instances
 start_button = button.Button(520, 160, start_img, 1)
 resume_button = button.Button(520, 160, resume_img, 1)
@@ -117,7 +119,7 @@ def intro_loop():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
-        pygame.display.update() 
+        pygame.display.update()
 
 def paused_loop():
     intro = True
@@ -137,7 +139,7 @@ def paused_loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-        pygame.display.update() 
+        pygame.display.update()
 
 
 
@@ -168,10 +170,7 @@ def game_loop():
             draw_text("P1 : " + str(score[0]), score_font, RED, 20, 60)
             draw_text("P2 : " + str(score[1]), score_font, RED, 860, 60)
             
-            
-            
-            
-            
+
             if intro_count <= 0:
             #move agent
                 agent_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, agent_2, round_over)
