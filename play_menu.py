@@ -96,7 +96,6 @@ agent_2 = Agent(2, 1000, 340, True, AGENT_DATA, agent_sheet, AGENT_ANIMATION_STE
 game_start = True
 menu_state = "start"
 def intro_loop():
-    mixer.music.load('background.wav')
     mixer.music.load('background.wav')#เพลง
     mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.05)#เปลี่ยนระเดับเสียงเพลง
